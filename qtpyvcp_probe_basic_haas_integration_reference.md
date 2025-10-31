@@ -1,0 +1,415 @@
+# QtPyVCP → Probe Basic: Haas Panel Integration Reference
+
+This reference was generated from your local QtPyVCP docs archive. It lists action strings and brief descriptions so we can map Haas panel buttons to Probe Basic/LinuxCNC behaviors and keep the GUI in sync.
+
+
+## Action Binding Basics
+- **bindWidget(widget, 'namespace.action:arg')** — connect widget or external event to an action string.
+  - Example: `machine.power.toggle`, `machine.home.axis:x`, `spindle.0.override`
+- Sliders/combos will pass their current value automatically to the action.
+- Use actions to ensure Probe Basic updates state and indicators consistently.
+
+
+## State & GUI Sync
+- Using action APIs updates internal state; Probe Basic visual indicators (coolant, overrides, etc.) reflect changes.
+- Rapid/Feed/Spindle overrides set via actions will move the corresponding sliders/labels.
+- Exported HAL pins can also drive/reflect the same states from HAL.
+
+
+## Working Plan
+1. Map Haas buttons to the **Action strings** below.
+2. Implement small helpers for stepped overrides (Rapid 5/25/50/100%; Spindle ±10%).
+3. Wire your I/O (Mesa/HAL/Pico) to invoke those actions/helpers.
+4. Verify GUI and machine behavior align; iterate per control.
+
+## Machine Actions
+
+- `machine.estop.activate`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.estop.reset`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.estop.toggle`  
+  - Making your first VCP — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Dialogs DRO Tutorial Machine Buttons MDI Touch Screens Overrides Button Groups VCP Template Making your…
+- `machine.estop.toggle`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.estop.toggle`  
+  - Clone and Prepare — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Clone and Prepare Setup the Layout Machine Controls Jog and DRO Back Plot File Navigator MDI Offsets Dialog…
+- `machine.estop.toggle`  
+  - Machine Controls — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Clone and Prepare Setup the Layout Machine Controls Jog and DRO Back Plot File Navigator MDI Offsets Dialogs…
+- `machine.feed-override.set`  
+  - Overrides — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Dialogs DRO Tutorial Machine Buttons MDI Touch Screens Overrides Button Groups VCP Template Making your first VCP W…
+- `machine.home.all`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.home.all`  
+  - qtpyvcp.widgets.menus.homing_menu — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widg…
+- `machine.home.axis`  
+  - qtpyvcp.widgets.menus.homing_menu — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widg…
+- `machine.home.axis:x`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.home.axis:x'`  
+  - Action Helpers — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Action Helpers Machine…
+- `machine.home.axis:x')`  
+  - qtpyvcp.actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets Application HA…
+- `machine.home.joint:0`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.issue_mdi:G0X5`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog-mode.continuous`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog-mode.incremental`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog-mode.toggle`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.angular-speed`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.angular-speed-percentage`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.axis`  
+  - qtpyvcp.actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets Application HA…
+- `machine.jog.axis:x,pos`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.increment`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.increment`  
+  - qtpyvcp.widgets.input_widgets.jog_increment — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Ac…
+- `machine.jog.linear-speed`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.linear-speed`  
+  - qtpyvcp.widgets.input_widgets.setting_slider — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins A…
+- `machine.jog.linear-speed-percentage`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.mode-incremental`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.set-linear-speed`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.jog.set-linear-speed`  
+  - Jog and DRO — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Clone and Prepare Setup the Layout Machine Controls Jog and DRO Back Plot File Navigator MDI Offsets Dialogs DRO…
+- `machine.mode.auto`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.mode.manual`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.mode.mdi`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.power.off`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.power.on`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.power.toggle`  
+  - Action Helpers — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Action Helpers Machine…
+- `machine.power.toggle`  
+  - Making your first VCP — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Dialogs DRO Tutorial Machine Buttons MDI Touch Screens Overrides Button Groups VCP Template Making your…
+- `machine.power.toggle`  
+  - qtpyvcp.actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets Application HA…
+- `machine.power.toggle`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.rapid-override.set`  
+  - Overrides — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Basic VCP Dialogs DRO Tutorial Machine Buttons MDI Touch Screens Overrides Button Groups VCP Template Making your first VCP W…
+- `machine.unhome.all`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.unhome.axis:x`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `machine.unhome.joint:0`  
+  - qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+
+## Program Actions
+
+- `program.abort`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.block-delete.off`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.block-delete.on`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.block-delete.toggle`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.clear`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.option-stop.off`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.optional-stop.on`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.optional-stop.toggle`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.pause`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.reload`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.resume`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.run`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.run:line`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `program.step`  
+  - qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+
+## Spindle Actions
+
+- `spindle.0.override`  
+  - Action Helpers — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Action Helpers Machine…
+- `spindle.0.override`  
+  - qtpyvcp.actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets Application HA…
+- `spindle.1.brake.off`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.brake.on`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.brake.toggle`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.faster`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.forward`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.off`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.reverse`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.1.slower`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.brake.off`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.brake.on`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.brake.toggle`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.faster`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.forward`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.forward:1800`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.n.brake`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.brake`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.direction`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.direction`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.enabled`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.enabled`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.homed`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.homed`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.orient_fault`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.orient_fault`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.orient_state`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.orient_state`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.override`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.override`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.override_enabled`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.override_enabled`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.n.speed`  
+  - Status Items — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Showc…
+- `spindle.n.speed`  
+  - Status plugin — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins Status plugin Notifications plugin Position plugin Tooltab…
+- `spindle.off`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.override`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.override.reset:2`  
+  - Action Buttons — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components Action Buttons Action Sliders VTK Backplot Containers VCP Stacked Widget Status Items Sub Call Button VCP Sho…
+- `spindle.reverse`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.reverse:1800`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `spindle.slower`  
+  - qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+
+## Coolant Actions
+
+- `coolant.flood.off`  
+  - qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `coolant.flood.on`  
+  - qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `coolant.flood.toggle`  
+  - qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `coolant.mist.off`  
+  - qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `coolant.mist.on`  
+  - qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+- `coolant.mist.toggle`  
+  - qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widget…
+
+## Tool Actions
+
+- `tool_actions.calibration`  
+  - qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets A…
+- `tool_actions.halmeter`  
+  - qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets A…
+- `tool_actions.halscope`  
+  - qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets A…
+- `tool_actions.halshow`  
+  - qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets A…
+- `tool_actions.simulate_probe`  
+  - qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets A…
+- `tool_actions.status`  
+  - qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 QtPyVCP 5.0.2 Getting Started Installation Basic Usage Configuration Tutorials Tutorials Components VCP Showcase Designer Documentation Widgets Plugins API Documentation Plugins Actions Widgets A…
+
+## Notes
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/action_helpers.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/genindex.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/base_plugins.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/tool_table.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/notifications.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/status.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/actions.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/qtpyvcp/actions/machine_actions.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/qtpyvcp/plugins/base_plugins.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/qtpyvcp/plugins/notifications.html`)
+- **Persistent data** — Settings can be declared persistent so GUI remembers values across sessions. (from `/qtpyvcp_docs/qtpyvcp/plugins/status.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/menus/homing_menu.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/dialog_button.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/action_checkbox.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/action_button.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/action_spinbox.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/line_edit.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/action_combobox.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/action_dial.html`)
+- **bindWidget helper** — bindWidget(widget, 'namespace.action:arg') wires GUI widgets to actions. For sliders/combos, their value is passed automatically. (from `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/action_slider.html`)
+
+## Local Pages Indexed
+- <no title> — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/index.html`
+- Acknowledgements — QtPyVCP 5.0.2 — `/qtpyvcp_docs/acknowledgements.html`
+- Action Buttons — QtPyVCP 5.0.2 — `/qtpyvcp_docs/action_buttons.html`
+- Action Helpers — QtPyVCP 5.0.2 — `/qtpyvcp_docs/action_helpers.html`
+- Action Sliders — QtPyVCP 5.0.2 — `/qtpyvcp_docs/action_sliders.html`
+- Application — QtPyVCP 5.0.2 — `/qtpyvcp_docs/application.html`
+- Back Plot — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_05.html`
+- Base Plugins — QtPyVCP 5.0.2 — `/qtpyvcp_docs/base_plugins.html`
+- Base Widgets — QtPyVCP 5.0.2 — `/qtpyvcp_docs/base_widget.html`
+- Basic Usage — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_usage.html`
+- Basic VCP — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/index.html`
+- Build debian packages — QtPyVCP 5.0.2 — `/qtpyvcp_docs/build_debs.html`
+- Button Groups — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/button_groups.html`
+- Buttons — QtPyVCP 5.0.2 — `/qtpyvcp_docs/buttons/index.html`
+- Clock plugin — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plugins/clock.html`
+- Clock — QtPyVCP 5.0.2 — `/qtpyvcp_docs/clock.html`
+- Clone and Prepare — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_01.html`
+- Containers — QtPyVCP 5.0.2 — `/qtpyvcp_docs/containers/index.html`
+- Contribution Guide — QtPyVCP 5.0.2 — `/qtpyvcp_docs/contribution_guide.html`
+- Coolant Actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/coolant_actions.html`
+- DRO Tutorial — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/dro_tutorial.html`
+- Debian 11 (Bullseye) install for Python 3 — QtPyVCP 5.0.2 — `/qtpyvcp_docs/bullseye.html`
+- Debian 12 (Bookworm) install for Python 3 — QtPyVCP 5.0.2 — `/qtpyvcp_docs/bookworm.html`
+- Development Guide — QtPyVCP 5.0.2 — `/qtpyvcp_docs/dev_environment.html`
+- Development Install for Python 3 (virtual environment) — QtPyVCP 5.0.2 — `/qtpyvcp_docs/dev_install.html`
+- Dialogs — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/dialogs.html`
+- Edit VCP — QtPyVCP 5.0.2 — `/qtpyvcp_docs/editvcp.html`
+- File Navigator — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_06.html`
+- HAL Interface — QtPyVCP 5.0.2 — `/qtpyvcp_docs/hal.html`
+- HAL Widgets — QtPyVCP 5.0.2 — `/qtpyvcp_docs/hal/index.html`
+- INI Options — QtPyVCP 5.0.2 — `/qtpyvcp_docs/ini_options.html`
+- Index — QtPyVCP 5.0.2 — `/qtpyvcp_docs/genindex.html`
+- Input Widgets — QtPyVCP 5.0.2 — `/qtpyvcp_docs/input/index.html`
+- Install from apt repository — QtPyVCP 5.0.2 — `/qtpyvcp_docs/apt_install.html`
+- Jog and DRO — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_04.html`
+- Lathe VCPs — QtPyVCP 5.0.2 — `/qtpyvcp_docs/lathe_vcps.html`
+- MDI — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/mdi.html`
+- Machine Actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/machine_actions.html`
+- Machine Buttons — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/machine_buttons.html`
+- Machine Controls — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_03.html`
+- Machine Positions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/positions.html`
+- Making your first VCP — QtPyVCP 5.0.2 — `/qtpyvcp_docs/first_vcp.html`
+- Mill VCPs — QtPyVCP 5.0.2 — `/qtpyvcp_docs/mill_vcps.html`
+- Notifications Plugin — QtPyVCP 5.0.2 — `/qtpyvcp_docs/notifications.html`
+- Notifications plugin — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plugins/notifications.html`
+- Offsets — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_08.html`
+- Overrides — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/overrides.html`
+- Overview: module code — QtPyVCP 5.0.2 — `/qtpyvcp_docs/index.html`
+- Plasma VCPs — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plasma_vcps.html`
+- Plugins — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plugins/index.html`
+- Position plugin — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plugins/position.html`
+- Prerequisites for python3 — QtPyVCP 5.0.2 — `/qtpyvcp_docs/prerequisites.html`
+- Program Actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/program_actions.html`
+- Python Module Index — QtPyVCP 5.0.2 — `/qtpyvcp_docs/py-modindex.html`
+- QCompile — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qcompile.html`
+- Recent Files Menu — QtPyVCP 5.0.2 — `/qtpyvcp_docs/menus.html`
+- Search — QtPyVCP 5.0.2 — `/qtpyvcp_docs/search.html`
+- Setup the Layout — QtPyVCP 5.0.2 — `/qtpyvcp_docs/basic_vcp/basic_vcp_02.html`
+- Spindle Actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/spindle_actions.html`
+- Standard Install — QtPyVCP 5.0.2 — `/qtpyvcp_docs/pypi_install.html`
+- Status Items — QtPyVCP 5.0.2 — `/qtpyvcp_docs/status_items.html`
+- Status plugin — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plugins/status.html`
+- Status — QtPyVCP 5.0.2 — `/qtpyvcp_docs/status.html`
+- Sub Call Button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/subcallbutton.html`
+- Tips & Tricks — QtPyVCP 5.0.2 — `/qtpyvcp_docs/misc.html`
+- Tool Actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/tool_actions.html`
+- Tool Table — QtPyVCP 5.0.2 — `/qtpyvcp_docs/tool_table.html`
+- Tooltable plugin — QtPyVCP 5.0.2 — `/qtpyvcp_docs/plugins/tool_table.html`
+- Touch Screens — QtPyVCP 5.0.2 — `/qtpyvcp_docs/components/touch_screen.html`
+- VCP Stacked Widget — QtPyVCP 5.0.2 — `/qtpyvcp_docs/stacked_widget.html`
+- VCP Template — QtPyVCP 5.0.2 — `/qtpyvcp_docs/vcp_template.html`
+- VTK Backplot — QtPyVCP 5.0.2 — `/qtpyvcp_docs/backplot.html`
+- Widget Rules — QtPyVCP 5.0.2 — `/qtpyvcp_docs/widget_rules.html`
+- Widgets — QtPyVCP 5.0.2 — `/qtpyvcp_docs/widgets/index.html`
+- YAML Config Files — QtPyVCP 5.0.2 — `/qtpyvcp_docs/yml_config.html`
+- qtpyvcp.actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions.html`
+- qtpyvcp.actions.base_actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions/base_actions.html`
+- qtpyvcp.actions.coolant_actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions/coolant_actions.html`
+- qtpyvcp.actions.machine_actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions/machine_actions.html`
+- qtpyvcp.actions.program_actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions/program_actions.html`
+- qtpyvcp.actions.spindle_actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions/spindle_actions.html`
+- qtpyvcp.actions.tool_actions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/actions/tool_actions.html`
+- qtpyvcp.app.application — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/app/application.html`
+- qtpyvcp.hal — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/hal.html`
+- qtpyvcp.plugins — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins.html`
+- qtpyvcp.plugins.base_plugins — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins/base_plugins.html`
+- qtpyvcp.plugins.clock — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins/clock.html`
+- qtpyvcp.plugins.notifications — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins/notifications.html`
+- qtpyvcp.plugins.positions — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins/positions.html`
+- qtpyvcp.plugins.status — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins/status.html`
+- qtpyvcp.plugins.tool_table — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/plugins/tool_table.html`
+- qtpyvcp.widgets.base_widgets.base_widget — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/base_widgets/base_widget.html`
+- qtpyvcp.widgets.button_widgets.action_button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/action_button.html`
+- qtpyvcp.widgets.button_widgets.action_checkbox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/action_checkbox.html`
+- qtpyvcp.widgets.button_widgets.action_spinbox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/action_spinbox.html`
+- qtpyvcp.widgets.button_widgets.dialog_button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/dialog_button.html`
+- qtpyvcp.widgets.button_widgets.mdi_button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/mdi_button.html`
+- qtpyvcp.widgets.button_widgets.subcall_button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/button_widgets/subcall_button.html`
+- qtpyvcp.widgets.containers.frame — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/containers/frame.html`
+- qtpyvcp.widgets.containers.widget — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/containers/widget.html`
+- qtpyvcp.widgets.dialogs.about_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/about_dialog.html`
+- qtpyvcp.widgets.dialogs.base_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/base_dialog.html`
+- qtpyvcp.widgets.dialogs.error_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/error_dialog.html`
+- qtpyvcp.widgets.dialogs.offsets_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/offsets_dialog.html`
+- qtpyvcp.widgets.dialogs.open_file_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/open_file_dialog.html`
+- qtpyvcp.widgets.dialogs.probesim_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/probesim_dialog.html`
+- qtpyvcp.widgets.dialogs.toolchange_dialog — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/dialogs/toolchange_dialog.html`
+- qtpyvcp.widgets.hal_widgets.hal_bar_indicator — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_bar_indicator.html`
+- qtpyvcp.widgets.hal_widgets.hal_button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_button.html`
+- qtpyvcp.widgets.hal_widgets.hal_checkbox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_checkbox.html`
+- qtpyvcp.widgets.hal_widgets.hal_double_spinbox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_double_spinbox.html`
+- qtpyvcp.widgets.hal_widgets.hal_groupbox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_groupbox.html`
+- qtpyvcp.widgets.hal_widgets.hal_label — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_label.html`
+- qtpyvcp.widgets.hal_widgets.hal_lcd — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_lcd.html`
+- qtpyvcp.widgets.hal_widgets.hal_led — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_led.html`
+- qtpyvcp.widgets.hal_widgets.hal_led_button — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_led_button.html`
+- qtpyvcp.widgets.hal_widgets.hal_plot — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_plot.html`
+- qtpyvcp.widgets.hal_widgets.hal_slider — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_slider.html`
+- qtpyvcp.widgets.hal_widgets.hal_spinbox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/hal_widgets/hal_spinbox.html`
+- qtpyvcp.widgets.input_widgets.action_combobox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/action_combobox.html`
+- qtpyvcp.widgets.input_widgets.action_dial — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/action_dial.html`
+- qtpyvcp.widgets.input_widgets.action_slider — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/action_slider.html`
+- qtpyvcp.widgets.input_widgets.dro_line_edit — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/dro_line_edit.html`
+- qtpyvcp.widgets.input_widgets.file_system — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/file_system.html`
+- qtpyvcp.widgets.input_widgets.gcode_editor — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/gcode_editor.html`
+- qtpyvcp.widgets.input_widgets.gcode_text_edit — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/gcode_text_edit.html`
+- qtpyvcp.widgets.input_widgets.jog_increment — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/jog_increment.html`
+- qtpyvcp.widgets.input_widgets.line_edit — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/line_edit.html`
+- qtpyvcp.widgets.input_widgets.mdientry_widget — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/mdientry_widget.html`
+- qtpyvcp.widgets.input_widgets.mdihistory_widget — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/mdihistory_widget.html`
+- qtpyvcp.widgets.input_widgets.offset_table — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/offset_table.html`
+- qtpyvcp.widgets.input_widgets.recent_file_combobox — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/recent_file_combobox.html`
+- qtpyvcp.widgets.input_widgets.setting_slider — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/input_widgets/setting_slider.html`
+- qtpyvcp.widgets.menus.homing_menu — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/menus/homing_menu.html`
+- qtpyvcp.widgets.recent_files_menu — QtPyVCP 5.0.2 — `/qtpyvcp_docs/qtpyvcp/widgets/recent_files_menu.html`
