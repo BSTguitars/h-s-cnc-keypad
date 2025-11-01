@@ -1,0 +1,42 @@
+──────────────────────────────────────────────
+Haas Panel → Raspberry Pi Pico Wiring Breakdown
+──────────────────────────────────────────────
+
+Ribbon cable connector: 24-pin (top to bottom = 1–24)
+Pico side: left header = GP0–GP15, right header = GP16–GP22 + GP26
+
+──────────────────────────────────────────────
+| Ribbon | Pico GPIO | Pico Pin | Notes / Use |
+|--------|------------|-----------|--------------|
+| 1      | GP0        | 1         | Matrix row/col |
+| 2      | GP1        | 2         | 〃 |
+| 3      | GP2        | 4         | 〃 |
+| 4      | GP3        | 5         | 〃 |
+| 5      | GP4        | 6         | 〃 |
+| 6      | GP5        | 7         | 〃 |
+| 7      | GP6        | 9         | 〃 |
+| 8      | GP7        | 10        | 〃 |
+| 9      | GP8        | 11        | 〃 |
+| 10     | GP9        | 12        | 〃 |
+| 11     | GP10       | 14        | 〃 |
+| 12     | GP11       | 15        | 〃 |
+| 13     | GP12       | 16        | 〃 |
+| 14     | GP13       | 17        | 〃 |
+| 15     | GP14       | 19        | 〃 |
+| 16     | GP15       | 20        | 〃 |
+| 17     | GP26       | 31        | (ADC0, used as digital I/O) |
+| 18     | GP22       | 29        | 〃 |
+| 19     | GP21       | 27        | 〃 |
+| 20     | GP20       | 26        | 〃 |
+| 21     | GP19       | 25        | 〃 |
+| 22     | GP18       | 24        | 〃 |
+| 23     | GP17       | 22        | 〃 |
+| 24     | GP16       | 21        | 〃 |
+──────────────────────────────────────────────
+
+NOTES:
+- Ribbon pins 1–16 map to Pico’s left-side GPIOs (GP0–GP15)
+- Ribbon pins 17–24 map to Pico’s right-side top GPIOs (GP16–GP22 + GP26)
+- GP26–GP28 are ADC-capable, but fully usable as digital lines
+- Provides 24 total I/O lines for an 11×13 matrix
+──────────────────────────────────────────────
