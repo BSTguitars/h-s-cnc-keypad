@@ -1,0 +1,99 @@
+===============================
+Haas Panel Keybinding Overview
+===============================
+
+Author: Ben
+Purpose: Integrate Haas control panel keys into Probe Basic (QtPyVCP)
+Date: 2025-10-31
+
+--------------------------------------------
+Summary
+--------------------------------------------
+Probe Basic does not have a global keybinding service.
+Shortcuts (like F1, F7, etc.) are registered when GUI components
+— such as the menubar, toolbar, or user_button widgets — are loaded.
+
+To make custom keyboard shortcuts that trigger Probe Basic actions
+without modifying system files or menus, we injected shortcut logic
+into the user_buttons widget (template_user_buttons.py).
+
+--------------------------------------------
+Implementation
+--------------------------------------------
+File edited:
+~/linuxcnc/configs/probe_basic/user_buttons/template_user_buttons/template_user_buttons.py
+
+Lines added:
+Inside the UserButton class, after the .ui file is loaded.
+
+We added this block (between "BEGIN CUSTOM SHORTCUTS" comments):
+
+    from qtpy.QtCore import QTimer, Qt
+    from qtpy.QtGui import QKeySequence
+    from qtpy.QtWidgets import QShortcut
+    from qtpyvcp import actions
+
+    def _bind_shortcuts():
+        win = self.window()
+        if not win:
+            return
+        self._shortcuts = []
+
+        sc1 = QShortcut(QKeySequence("K"), win)
+        sc1.setContext(Qt.ApplicationShortcut)
+        sc1.activated.connect(actions.program.optional_stop.toggle)
+        self._shortcuts.append(sc1)
+
+        sc2 = QShortcut(QKeySequence("Shift+K"), win)
+        sc2.setContext(Qt.ApplicationShortcut)
+        sc2.activated.connect(lambda: actions.machine.rapid_override.set(25))
+        self._shortcuts.append(sc2)
+
+    QTimer.singleShot(0, _bind_shortcuts)
+
+--------------------------------------------
+How it works
+--------------------------------------------
+- When Probe Basic loads the user_buttons widget, the QTimer waits
+  until the UI is fully initialized.
+- Then it creates QShortcut objects attached to the main window.
+- The "ApplicationShortcut" context makes them work regardless of
+  which widget is in focus.
+- We keep references in self._shortcuts so they don't get garbage
+  collected.
+- Each shortcut runs a QtPyVCP action, for example:
+      actions.program.optional_stop.toggle()
+      actions.machine.rapid_override.set(25)
+
+--------------------------------------------
+Adding more shortcuts
+--------------------------------------------
+To add more keys, duplicate one of the shortcut lines:
+
+    sc3 = QShortcut(QKeySequence("F12"), win)
+    sc3.setContext(Qt.ApplicationShortcut)
+    sc3.activated.connect(actions.coolant.flood.toggle)
+    self._shortcuts.append(sc3)
+
+Use any valid Qt key sequence, such as:
+    "Ctrl+J", "Alt+R", "Shift+M", "F13", etc.
+
+And match it to a valid Probe Basic action like:
+    actions.machine.estop.toggle()
+    actions.spindle.forward()
+    actions.coolant.mist.toggle()
+    actions.tool.change()
+    actions.program.run()
+
+--------------------------------------------
+Notes
+--------------------------------------------
+- All shortcuts load automatically with the GUI.
+- No system file edits needed.
+- If Probe Basic updates, just copy this user_buttons folder
+  into the new config.
+- The BEGIN/END CUSTOM SHORTCUTS comments mark where to edit.
+
+--------------------------------------------
+End of Notes
+--------------------------------------------

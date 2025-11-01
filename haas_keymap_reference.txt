@@ -1,0 +1,202 @@
+───────────────────────────────────────────────────────────────
+HAAS CONTROL PANEL → USB KEYBOARD MAPPING REFERENCE
+Version: v9 – Full Matrix (Raspberry Pi Pico RP2040)
+───────────────────────────────────────────────────────────────
+
+LEGEND:
+• Row / Col = physical matrix position on Haas panel
+• Output = key or function sent via USB HID
+• “Shift+”, “Ctrl+”, or “Alt+” prefixes = modifier behavior
+• Keys beyond F24 are virtual assignments (software-defined in LinuxCNC)
+
+───────────────────────────────────────────────────────────────
+LETTERS (A–Z)
+───────────────────────────────────────────────────────────────
+Row,Col | Output
+6,1  → a / A
+6,0  → b / B
+6,10 → c / C
+6,9  → d / D
+6,8  → e / E
+7,2  → f / F
+7,1  → g / G
+7,0  → h / H
+7,10 → i / I
+7,9  → j / J
+7,8  → k / K
+8,2  → l / L
+8,1  → m / M
+8,0  → n / N
+8,10 → o / O
+8,9  → p / P
+8,8  → q / Q
+9,2  → r / R
+9,1  → s / S
+9,0  → t / T
+9,10 → u / U
+9,9  → v / V
+9,8  → w / W
+10,2 → x / X
+10,1 → y / Y
+10,0 → z / Z
+
+───────────────────────────────────────────────────────────────
+NUMBERS & PUNCTUATION
+───────────────────────────────────────────────────────────────
+Row,Col | Output | Shifted Output (Haas-style)
+8,7  → 1  | *
+8,6  → 2  | '
+8,5  → 3  | ?
+7,7  → 4  | %
+7,6  → 5  | $
+7,5  → 6  | !
+6,7  → 7  | &
+6,6  → 8  | @
+6,5  → 9  | :
+9,6  → 0  | =
+9,7  → -  | +
+9,5  → .  | #
+10,9 → (  | [
+10,8 → )  | ]
+
+───────────────────────────────────────────────────────────────
+BASIC CONTROL KEYS
+───────────────────────────────────────────────────────────────
+Row,Col | Function
+10,7 → CANCEL → Backspace / Delete
+10,6 → SPACE → Spacebar
+10,5 → WRITE/ENTER → Enter key
+10,10 → EOB → ;  (Shift+EOB → /)
+
+───────────────────────────────────────────────────────────────
+AXIS JOG KEYS (DIRECT MOTION)
+───────────────────────────────────────────────────────────────
+Row,Col | Function | Output
+4,3  → -X → LEFT ARROW
+4,12 → +X → RIGHT ARROW
+3,3  → -Y → DOWN ARROW
+5,12 → +Y → UP ARROW
+5,4  → -Z → PAGE DOWN
+3,4  → +Z → PAGE UP
+
+───────────────────────────────────────────────────────────────
+HAAS SOFT KEYS (F1–F4)
+───────────────────────────────────────────────────────────────
+1,11 → F1
+1,12 → F2
+1,4  → F3
+1,3  → F4
+
+───────────────────────────────────────────────────────────────
+ARROW CLUSTER KEYS (REASSIGNED TO FN KEYS)
+───────────────────────────────────────────────────────────────
+3,0  → F13 (UP)
+3,10 → F14 (PAGE UP)
+4,1  → F15 (LEFT)
+4,10 → F16 (RIGHT)
+5,1  → F17 (DOWN / END)
+5,10 → F18 (PAGE DOWN)
+
+───────────────────────────────────────────────────────────────
+ROTARY / SPINDLE SELECT
+───────────────────────────────────────────────────────────────
+3,12 → +A → F19
+5,3  → -A → F20
+Shift+3,12 → +B (Shift+F25)
+Shift+5,3  → -B (Shift+F26)
+
+───────────────────────────────────────────────────────────────
+MACHINE / TOOL FUNCTIONS
+───────────────────────────────────────────────────────────────
+0,12 → RESET → F21
+0,4  → POWER UP / RESTART → F22
+0,3  → RECOVER → F23
+2,11 → TOOL OFFSET MEASURE → F24
+2,12 → NEXT TOOL → Shift+F13
+2,4  → TOOL RELEASE → Shift+F14
+2,3  → PART ZERO SET → Shift+F15
+2,5  → ATC REV → Shift+F16
+2,6  → ATC FWD → Shift+F17
+
+───────────────────────────────────────────────────────────────
+COOLANT / CHIP CONTROL
+───────────────────────────────────────────────────────────────
+3,11 → CHIP FWD → Ctrl+F13
+4,11 → CHIP STOP → Ctrl+F14
+5,11 → CHIP REV → Ctrl+F15
+3,2  → CLNT UP → Ctrl+F16
+4,2  → CLNT DOWN → Ctrl+F17
+5,2  → AUX CLNT → Ctrl+F18
+
+───────────────────────────────────────────────────────────────
+FEED / SPINDLE OVERRIDES
+───────────────────────────────────────────────────────────────
+7,11 → -10 FEED → Alt+F13
+7,12 → 100% FEED → Alt+F14
+7,4  → +10 FEED → Alt+F15
+7,3  → HAND FEED → Alt+F16
+8,11 → -10 SPINDLE → Alt+F17
+8,4  → +10 SPINDLE → Alt+F18
+8,3  → HAND SPINDLE → Alt+F19
+8,12 → 100% SPINDLE → Alt+F20
+9,11 → SPINDLE CW → Alt+F21
+9,12 → SPINDLE STOP → Alt+F22
+9,4  → SPINDLE CCW → Alt+F23
+
+───────────────────────────────────────────────────────────────
+RAPID OVERRIDES
+───────────────────────────────────────────────────────────────
+10,11 → 5% RAPID → Alt+F24
+10,12 → 25% RAPID → Ctrl+F19
+10,4  → 50% RAPID → Ctrl+F20
+10,3  → 100% RAPID → Ctrl+F21
+
+───────────────────────────────────────────────────────────────
+DISPLAY / MODE BUTTONS
+───────────────────────────────────────────────────────────────
+0,2  → PROGRAM/CONVERSATIONAL → Shift+F13
+0,1  → POSITION → Shift+F14
+0,0  → OFFSET → Shift+F15
+0,10 → CURRENT COMMANDS → Shift+F16
+1,2  → ALARM MESSAGES → Shift+F17
+1,1  → PARAMETERS/DIAGNOSTICS → Shift+F18
+1,0  → SETTINGS/GRAPH → Shift+F19
+1,10 → HELP/CALCULATOR → Shift+F20
+3,1  → HOME → Shift+F21
+
+───────────────────────────────────────────────────────────────
+MODE CLUSTER
+───────────────────────────────────────────────────────────────
+0,9  → EDIT → Ctrl+F22
+1,9  → MEM → Ctrl+F23
+2,9  → MDI/DNC → Ctrl+F24
+3,9  → HAND JOG → Alt+F13
+4,9  → ZERO RETURN → Alt+F14
+5,9  → LIST PROGRAM → Alt+F15
+
+───────────────────────────────────────────────────────────────
+EDIT / OPTION STRIP
+───────────────────────────────────────────────────────────────
+0,8  → INSERT → Alt+F16
+1,8  → SINGLE BLOCK → Alt+F17
+2,8  → COOLANT → Alt+F18
+3,8  → .0001 → Alt+F19
+4,8  → ALL → Alt+F20
+5,8  → SELECT PROGRAM → Alt+F21
+0,7  → ALTER → Alt+F22
+1,7  → DRY RUN → Alt+F23
+2,7  → ORIENT SPINDLE → Alt+F24
+3,7  → .001 → Shift+F13
+4,7  → ORIGIN → Shift+F14
+5,7  → SEND → Shift+F15
+0,6  → DELETE → Shift+F16
+1,6  → OPTION STOP → Shift+F17
+3,6  → .01 → Shift+F18
+4,6  → SINGL → Shift+F19
+5,6  → RECV → Shift+F20
+0,5  → UNDO → Shift+F21
+1,5  → BLOCK DELETE → Shift+F22
+3,5  → .1 → Shift+F23
+4,5  → HOME G28 → Shift+F24
+5,5  → ERASE PROGRAM → Ctrl+F13
+───────────────────────────────────────────────────────────────
