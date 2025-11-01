@@ -68,38 +68,107 @@ KeyMapEntry MAP[] = {
   // Softkeys
   {1,11,"F1"}, {1,12,"F2"}, {1,4,"F3"}, {1,3,"F4"},
 
+  // ────────────────────────────────────────────────
   // Machine / Tool functions
-  {0,12,"Ctrl+Alt+R"}, {0,4,"Ctrl+Alt+P"}, {0,3,"Ctrl+Alt+V"},
-  {2,11,"Ctrl+Alt+T"}, {2,12,"Ctrl+Alt+N"}, {2,4,"Ctrl+Alt+U"},
-  {2,3,"Ctrl+Alt+Z"}, {2,5,"Ctrl+Alt+Y"}, {2,6,"Ctrl+Alt+O"},
+  // ────────────────────────────────────────────────
+  {0,12,"Ctrl+Alt+R"},  // RESET
+  {0,4,"Ctrl+Alt+P"},   // POWER UP / RESTART
+  {0,3,"Ctrl+Alt+V"},   // RECOVER
+  {2,11,"Ctrl+Alt+T"},  // TOOL OFFSET MEASURE
+  {2,12,"Ctrl+Alt+N"},  // NEXT TOOL
+  {2,4,"Ctrl+Alt+U"},   // TOOL RELEASE
+  {2,3,"Ctrl+Alt+Z"},   // PART ZERO SET
+  {2,5,"Ctrl+Alt+Y"},   // ATC REV
+  {2,6,"Ctrl+Alt+O"},   // ATC FWD
 
+  // ────────────────────────────────────────────────
   // Coolant / Chip
-  {3,11,"Ctrl+Alt+C"}, {4,11,"Ctrl+Alt+H"}, {5,11,"Ctrl+Alt+X"},
-  {3,2,"Ctrl+Alt+L"}, {4,2,"Ctrl+Alt+D"}, {5,2,"Ctrl+Alt+E"},
+  // ────────────────────────────────────────────────
+  {3,11,"Ctrl+Alt+C"},  // CHIP FWD
+  {4,11,"Ctrl+Alt+H"},  // CHIP STOP
+  {5,11,"Ctrl+Alt+X"},  // CHIP REV
+  {3,2,"Ctrl+Alt+L"},   // CLNT UP
+  {4,2,"Ctrl+Alt+D"},   // CLNT DOWN
+  {5,2,"Ctrl+Alt+E"},   // AUX CLNT (MIST)
 
-  // Feed / Spindle
-  {7,11,"Ctrl+Alt+F"}, {7,12,"Ctrl+Alt+G"}, {7,4,"Ctrl+Alt+W"}, {7,3,"Ctrl+Alt+Q"},
-  {8,11,"Ctrl+Alt+S"}, {8,4,"Ctrl+Alt+K"}, {8,3,"Ctrl+Alt+M"}, {8,12,"Ctrl+Alt+1"},
-  {9,11,"Ctrl+Alt+2"}, {9,12,"Ctrl+Alt+3"}, {9,4,"Ctrl+Alt+4"},
+  // ────────────────────────────────────────────────
+  // Feed / Spindle Overrides and Controls
+  // ────────────────────────────────────────────────
+  {7,11,"Ctrl+Alt+F"},  // -10% FEED
+  {7,12,"Ctrl+Alt+G"},  // 100% FEED
+  {7,4,"Ctrl+Alt+W"},   // +10% FEED
+  {7,3,"Ctrl+Alt+Q"},   // HAND FEED
 
-  // Rapids
-  {10,11,"Ctrl+Alt+5"}, {10,12,"Ctrl+Alt+6"}, {10,4,"Ctrl+Alt+7"}, {10,3,"Ctrl+Alt+8"},
+  {8,11,"Ctrl+Alt+S"},  // -10% SPINDLE
+  {8,4,"Ctrl+Alt+K"},   // +10% SPINDLE
+  {8,3,"Ctrl+Alt+M"},   // HAND SPINDLE
+  {8,12,"Ctrl+Alt+1"},  // 100% SPINDLE
 
-  // Display / Mode
-  {0,2,"Ctrl+Alt+9"}, {0,1,"Ctrl+Alt+0"}, {0,0,"Ctrl+Alt+I"}, {0,10,"Ctrl+Alt+O"},
-  {1,2,"Ctrl+Alt+A"}, {1,1,"Ctrl+Alt+B"}, {1,0,"Ctrl+Alt+C"}, {1,10,"Ctrl+Alt+D"}, {3,1,"Ctrl+Alt+E"},
+  {9,11,"Ctrl+Alt+2"},  // SPINDLE CW (FORWARD)
+  {9,12,"Ctrl+Alt+3"},  // SPINDLE STOP
+  {9,4,"Ctrl+Alt+4"},   // SPINDLE CCW (REVERSE)
 
-  // Modes
-  {0,9,"Ctrl+Alt+F"}, {1,9,"Ctrl+Alt+G"}, {2,9,"Ctrl+Alt+H"}, {3,9,"Ctrl+Alt+J"},
-  {4,9,"Ctrl+Alt+K"}, {5,9,"Ctrl+Alt+L"},
+  // ────────────────────────────────────────────────
+  // Rapid Overrides
+  // ────────────────────────────────────────────────
+  {10,11,"Ctrl+Alt+5"}, // 5% RAPID
+  {10,12,"Ctrl+Alt+6"}, // 25% RAPID
+  {10,4,"Ctrl+Alt+7"},  // 50% RAPID
+  {10,3,"Ctrl+Alt+8"},  // 100% RAPID
 
-  // Edit / Option
-  {0,8,"Ctrl+Alt+M"}, {1,8,"Ctrl+Alt+N"}, {2,8,"Ctrl+Alt+P"}, {3,8,"Ctrl+Alt+R"},
-  {4,8,"Ctrl+Alt+S"}, {5,8,"Ctrl+Alt+T"}, {0,7,"Ctrl+Alt+U"}, {1,7,"Ctrl+Alt+V"},
-  {2,7,"Ctrl+Alt+W"}, {3,7,"Ctrl+Alt+X"}, {4,7,"Ctrl+Alt+Y"}, {5,7,"Ctrl+Alt+Z"},
-  {0,6,"Ctrl+Alt+1"}, {1,6,"Ctrl+Alt+2"}, {3,6,"Ctrl+Alt+3"}, {4,6,"Ctrl+Alt+4"},
-  {5,6,"Ctrl+Alt+5"}, {0,5,"Ctrl+Alt+6"}, {1,5,"Ctrl+Alt+7"}, {3,5,"Ctrl+Alt+8"},
-  {4,5,"Ctrl+Alt+9"}, {5,5,"Ctrl+Alt+0"}
+  // ────────────────────────────────────────────────
+  // Display / Mode Buttons
+  // ────────────────────────────────────────────────
+  {0,2,"Ctrl+Alt+9"},   // PROGRAM / CONVERSATIONAL
+  {0,1,"Ctrl+Alt+0"},   // POSITION
+  {0,0,"Ctrl+Alt+I"},   // OFFSET
+  {0,10,"Ctrl+Alt+O"},  // CURRENT COMMANDS
+
+  {1,2,"Ctrl+Alt+A"},   // ALARM MESSAGES
+  {1,1,"Ctrl+Alt+B"},   // PARAMETERS / DIAGNOSTICS
+  {1,0,"Ctrl+Alt+C"},   // SETTINGS / GRAPH
+  {1,10,"Ctrl+Alt+D"},  // HELP / CALCULATOR
+  {3,1,"Ctrl+Alt+E"},   // HOME
+
+  // ────────────────────────────────────────────────
+  // Mode Cluster
+  // ────────────────────────────────────────────────
+  {0,9,"Ctrl+Alt+F"},   // EDIT
+  {1,9,"Ctrl+Alt+G"},   // MEM
+  {2,9,"Ctrl+Alt+H"},   // MDI / DNC
+  {3,9,"Ctrl+Alt+J"},   // HAND JOG
+  {4,9,"Ctrl+Alt+K"},   // ZERO RETURN
+  {5,9,"Ctrl+Alt+L"},   // LIST PROGRAM
+
+  // ────────────────────────────────────────────────
+  // Edit / Option Strip
+  // ────────────────────────────────────────────────
+  {0,8,"Ctrl+Alt+M"},   // INSERT
+  {1,8,"Ctrl+Alt+N"},   // SINGLE BLOCK
+  {2,8,"Ctrl+Alt+P"},   // COOLANT
+  {3,8,"Ctrl+Alt+R"},   // .0001 (JOG INC)
+  {4,8,"Ctrl+Alt+S"},   // ALL (ZERO ALL)
+  {5,8,"Ctrl+Alt+T"},   // SELECT PROGRAM
+
+  {0,7,"Ctrl+Alt+U"},   // ALTER
+  {1,7,"Ctrl+Alt+V"},   // DRY RUN
+  {2,7,"Ctrl+Alt+W"},   // ORIENT SPINDLE
+  {3,7,"Ctrl+Alt+X"},   // .001 (JOG INC)
+  {4,7,"Ctrl+Alt+Y"},   // ORIGIN
+  {5,7,"Ctrl+Alt+Z"},   // SEND
+
+  {0,6,"Ctrl+Alt+1"},   // DELETE
+  {1,6,"Ctrl+Alt+2"},   // OPTION STOP
+  {3,6,"Ctrl+Alt+3"},   // .01 (JOG INC)
+  {4,6,"Ctrl+Alt+4"},   // SINGLE (SINGL)
+  {5,6,"Ctrl+Alt+5"},   // RECV
+
+  {0,5,"Ctrl+Alt+6"},   // UNDO
+  {1,5,"Ctrl+Alt+7"},   // BLOCK DELETE
+  {3,5,"Ctrl+Alt+8"},   // .1 (JOG INC)
+  {4,5,"Ctrl+Alt+9"},   // HOME G28
+  {5,5,"Ctrl+Alt+0"}    // ERASE PROGRAM
+
 };
 const size_t MAP_LEN = sizeof(MAP)/sizeof(MAP[0]);
 
