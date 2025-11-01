@@ -60,7 +60,7 @@ KeyMapEntry MAP[] = {
 
   // Axis jogs
   {4,3,"LEFT"}, {4,12,"RIGHT"}, {3,3,"DOWN"}, {5,12,"UP"},
-  {5,4,"PGDN"}, {3,4,"PGUP"}, {4,4,"Ctrl+Alt+J"},
+  {5,4,"PGDN"}, {3,4,"PGUP"}, {4,4,"Ctrl+Alt+J"},   //jog lock
 
   // Rotary / A-axis
   {3,12,"Ctrl+Alt+A"}, {5,3,"Ctrl+Alt+B"},
@@ -84,7 +84,7 @@ KeyMapEntry MAP[] = {
   // ────────────────────────────────────────────────
   // Coolant / Chip
   // ────────────────────────────────────────────────
-  {3,11,"Ctrl+Alt+C"},  // CHIP FWD
+  {3,11,"Ctrl+Alt+Q"},  // CHIP FWD  (changed from C)
   {4,11,"Ctrl+Alt+H"},  // CHIP STOP
   {5,11,"Ctrl+Alt+X"},  // CHIP REV
   {3,2,"Ctrl+Alt+L"},   // CLNT UP
@@ -94,10 +94,10 @@ KeyMapEntry MAP[] = {
   // ────────────────────────────────────────────────
   // Feed / Spindle Overrides and Controls
   // ────────────────────────────────────────────────
-  {7,11,"Ctrl+Alt+F"},  // -10% FEED
-  {7,12,"Ctrl+Alt+G"},  // 100% FEED
+  {7,11,"Ctrl+Alt+J"},  // -10% FEED  (changed from F)
+  {7,12,"Ctrl+Alt+L"},  // 100% FEED  (changed from G)
   {7,4,"Ctrl+Alt+W"},   // +10% FEED
-  {7,3,"Ctrl+Alt+Q"},   // HAND FEED
+  {7,3,"Ctrl+Alt+U"},   // HAND FEED  (changed from Q)
 
   {8,11,"Ctrl+Alt+S"},  // -10% SPINDLE
   {8,4,"Ctrl+Alt+K"},   // +10% SPINDLE
@@ -122,7 +122,7 @@ KeyMapEntry MAP[] = {
   {0,2,"Ctrl+Alt+9"},   // PROGRAM / CONVERSATIONAL
   {0,1,"Ctrl+Alt+0"},   // POSITION
   {0,0,"Ctrl+Alt+I"},   // OFFSET
-  {0,10,"Ctrl+Alt+O"},  // CURRENT COMMANDS
+  {0,10,"Ctrl+Alt+;"},  // CURRENT COMMANDS  (changed from O)
 
   {1,2,"Ctrl+Alt+A"},   // ALARM MESSAGES
   {1,1,"Ctrl+Alt+B"},   // PARAMETERS / DIAGNOSTICS
@@ -137,7 +137,7 @@ KeyMapEntry MAP[] = {
   {1,9,"Ctrl+Alt+G"},   // MEM
   {2,9,"Ctrl+Alt+H"},   // MDI / DNC
   {3,9,"Ctrl+Alt+J"},   // HAND JOG
-  {4,9,"Ctrl+Alt+K"},   // ZERO RETURN
+  {4,9,"Ctrl+Alt+N"},   // ZERO RETURN  (changed from K)
   {5,9,"Ctrl+Alt+L"},   // LIST PROGRAM
 
   // ────────────────────────────────────────────────
@@ -147,7 +147,7 @@ KeyMapEntry MAP[] = {
   {1,8,"Ctrl+Alt+N"},   // SINGLE BLOCK
   {2,8,"Ctrl+Alt+P"},   // COOLANT
   {3,8,"Ctrl+Alt+R"},   // .0001 (JOG INC)
-  {4,8,"Ctrl+Alt+S"},   // ALL (ZERO ALL)
+  {4,8,"Ctrl+Alt+T"},   // ALL (ZERO ALL)  (changed from S)
   {5,8,"Ctrl+Alt+T"},   // SELECT PROGRAM
 
   {0,7,"Ctrl+Alt+U"},   // ALTER
@@ -157,8 +157,8 @@ KeyMapEntry MAP[] = {
   {4,7,"Ctrl+Alt+Y"},   // ORIGIN
   {5,7,"Ctrl+Alt+Z"},   // SEND
 
-  {0,6,"Ctrl+Alt+1"},   // DELETE
-  {1,6,"Ctrl+Alt+2"},   // OPTION STOP
+  {0,6,"Ctrl+Alt+D"},   // DELETE  (changed from 1)
+  {1,6,"Ctrl+Alt+O"},   // OPTION STOP (M01)  (changed from 2)
   {3,6,"Ctrl+Alt+3"},   // .01 (JOG INC)
   {4,6,"Ctrl+Alt+4"},   // SINGLE (SINGL)
   {5,6,"Ctrl+Alt+5"},   // RECV
@@ -168,6 +168,7 @@ KeyMapEntry MAP[] = {
   {3,5,"Ctrl+Alt+8"},   // .1 (JOG INC)
   {4,5,"Ctrl+Alt+9"},   // HOME G28
   {5,5,"Ctrl+Alt+0"}    // ERASE PROGRAM
+
 
 };
 const size_t MAP_LEN = sizeof(MAP)/sizeof(MAP[0]);
