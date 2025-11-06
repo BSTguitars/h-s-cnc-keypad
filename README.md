@@ -1,68 +1,28 @@
-HAAS CONTROL PANEL → LINUXCNC / PROBE BASIC INTEGRATION
-Version: v10 - Raspberry Pi Pico RP2040 Keyboard Interface
-====================================================================
+this is a simple project to reuse as much as possible of a hass cnc panle, 
+to control linuxcnc and probe basic gui. 
+the decoding software could be used to decode any keyboard matrix.
 
-Overview
---------------------------------------------------------------------
-This project connects a real Haas CNC control panel to LinuxCNC
-running the Probe Basic (QtPyVCP) GUI.
-
-A Raspberry Pi Pico scans the Haas keyboard matrix and emulates
-a USB keyboard. The Haas keys send regular keyboard inputs that
-Probe Basic responds to through custom shortcut bindings.
-
-These shortcuts are defined inside Probe Basic so the panel can
-control functions like coolant, overrides, jog increments,
-and spindle direction directly from the Haas keypad.
-
---------------------------------------------------------------------
-System Layout
---------------------------------------------------------------------
-Haas Panel  →  Pico RP2040  →  USB HID Keyboard  →  LinuxCNC / Probe Basic
-
-Hardware:
-- Haas panel connected to Pico GPIOs
-- Pico running custom firmware for matrix scanning
-- Outputs plain keycodes over USB
-
-Software:
-- LinuxCNC with Probe Basic GUI
-- Shortcuts added to template_user_buttons.py
-
---------------------------------------------------------------------
-Shortcut Binding
---------------------------------------------------------------------
-Probe Basic does not have a built-in keybinding system.
-Shortcuts are created in Python using QShortcut inside:
-
-  ~/linuxcnc/configs/probe_basic/user_buttons/template_user_buttons.py
-
-Example:
-  sc = QShortcut(QKeySequence("Alt+F24"), win)
-  sc.setContext(Qt.ApplicationShortcut)
-  sc.activated.connect(lambda: actions.machine.rapid_override.set(5))
-
-
-
---------------------------------------------------------------------
-Files
---------------------------------------------------------------------
-haas_keymap_v10.txt                Full Haas matrix and key outputs
-template_user_buttons.py           Shortcut definitions
-qtpyvcp_action_strings.txt         List of valid Probe Basic actions
-qtpyvcp_probe_basic_reference.md   QtPyVCP action reference
-README.txt                         This project overview
-
---------------------------------------------------------------------
-Testing
---------------------------------------------------------------------
-1. Start LinuxCNC with the Probe Basic configuration.
-2. Open probe_basic.log to watch for shortcut messages.
-3. Press a Haas key and verify the corresponding GUI function reacts.
-4. Restart Probe Basic if shortcuts are changed.
-
---------------------------------------------------------------------
-Author:  Ben
-Project: haasPanel
-License: MIT
-====================================================================
+ project ues a pi pico, sends usb keyboard shortcuts to control linuxcnc/probe basic. 
+ 
+ matrixtest folder is arduino mega code i wrote before getting the pico. 
+ its to send serial info to help map the keyboard matrix.
+ 
+ pico_matrix_decoder has the pico code for decoding. 
+ 
+ 
+ picohaashid folder has the code that pushing my keyboard shortcuts.
+ 
+ haas_keymap.csv list the mapping of the keys i genrated based on the way i wried the pic0.
+ 
+ 
+ haas_keymap_ref is just a list of matrix numbers, lable on haas key, and shortcut it transmits.
+ 
+ matrix_map.py will read you keyboard inputs and ask you to name them.
+ if you inout the same key it will ask if you want to rename them. it will genratea a csv file listing
+ rw/col and what you named it. 
+ 
+ picosetup.txt trys to explain the wiring. 
+ 
+ read_key.py when you press a key , it will print the key name from the csv file
+ 
+ 

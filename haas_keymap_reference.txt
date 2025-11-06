@@ -1,130 +1,151 @@
 ───────────────────────────────────────────────────────────────
 HAAS CONTROL PANEL → USB KEYBOARD MAPPING REFERENCE
-Version: v11 – LinuxCNC / Probe Basic Integrated (Pico RP2040, Ctrl+Alt HID)
+Version 1.0 • LinuxCNC / Probe Basic Debian-XFCE-Safe Edition (Pico RP2040 HID)
 ───────────────────────────────────────────────────────────────
 
-LEGEND:
+LEGEND
 • Row / Col = physical matrix position on Haas panel
-• Output = key or function sent via USB HID (Ctrl+Alt combos)
-• “Ctrl+Alt+” prefixes = protected printable combinations
-• No F-keys or virtual keys are used
-• Reflects tested bindings for Probe Basic (Rapid, Feed, Spindle, Coolant, etc.)
+• Output = key or combo sent via USB HID
+• Ctrl+Alt / Ctrl / Ctrl+Shift / Alt+Shift = custom safe shortcuts
+• Matches Arduino v 1.0 firmware exactly (rotary A/B handled in code)
 
 ───────────────────────────────────────────────────────────────
 BASIC CONTROL KEYS
 ───────────────────────────────────────────────────────────────
-10,7  → CANCEL ............. Backspace / Delete
-10,6  → SPACE .............. Spacebar
-10,5  → WRITE / ENTER ...... Enter
-10,10 → EOB ................ ;   (Shift+EOB → /)
+10,7  → CANCEL  ............. Backspace / Delete
+10,6  → SPACE    ............ Spacebar
+10,5  → ENTER    ............ Enter  (WRITE)
+10,10 → EOB      ............ ;  (Shift = /)
 
 ───────────────────────────────────────────────────────────────
-AXIS JOG KEYS
+AXIS JOG KEYS (arrow / page)
 ───────────────────────────────────────────────────────────────
-4,3  → -X ................. LEFT ARROW
-4,12 → +X ................. RIGHT ARROW
-3,3  → -Y ................. DOWN ARROW
-5,12 → +Y ................. UP ARROW
-5,4  → -Z ................. PAGE DOWN
-3,4  → +Z ................. PAGE UP
+4,3   → - X     ............. Left Arrow
+4,12  → + X     ............. Right Arrow
+3,3   → - Y     ............. Down Arrow
+5,12  → + Y     ............. Up Arrow
+5,4   → - Z     ............. Page Down
+3,4   → + Z     ............. Page Up
+4,4   → Ctrl+Alt+O .......... Jog Lock
 
 ───────────────────────────────────────────────────────────────
-MACHINE / TOOL FUNCTIONS
+MACHINE / TOOL FUNCTIONS (Ctrl+Alt)
 ───────────────────────────────────────────────────────────────
-0,12 → Ctrl+Alt+R ......... RESET
-0,4  → Ctrl+Alt+P ......... POWER UP / RESTART
-0,3  → Ctrl+Alt+V ......... RECOVER
-2,11 → Ctrl+Alt+T ......... TOOL OFFSET MEASURE
-2,12 → Ctrl+Alt+N ......... NEXT TOOL
-2,4  → Ctrl+Alt+U ......... TOOL RELEASE
-2,3  → Ctrl+Alt+Z ......... PART ZERO SET
-2,5  → Ctrl+Alt+Y ......... ATC REV
-2,6  → Ctrl+Alt+O ......... ATC FWD
+0,2   → Ctrl+Alt+A  ......... Program / Conversational
+0,1   → Ctrl+Alt+C  ......... Position
+0,0   → Ctrl+Alt+E  ......... Offset
+0,10  → Ctrl+Alt+G  ......... Current Commands
+1,2   → Ctrl+Alt+H  ......... Alarm Messages
+1,1   → Ctrl+Alt+I  ......... Parameters / Diagnostics
+1,0   → Ctrl+Alt+J  ......... Settings / Graph
+3,1   → Ctrl+Alt+K  ......... Home
+5,1   → Ctrl+Alt+M  ......... End (Navigation)
+4,8   → Ctrl+Alt+N  ......... Zero All
+4,4   → Ctrl+Alt+O  ......... Jog Lock
+1,9   → Ctrl+Alt+R  ......... MEM
+0,3   → Ctrl+Alt+U  ......... Recover
+2,9   → Ctrl+Alt+V  ......... MDI / DNC
+2,11  → Ctrl+Alt+X  ......... Tool Offset Measure
+5,9   → Ctrl+Alt+Y  ......... List Program
+0,8   → Ctrl+Alt+Z  ......... Insert
 
 ───────────────────────────────────────────────────────────────
-COOLANT / CHIP CONTROL
+CTRL-ONLY COMMANDS
 ───────────────────────────────────────────────────────────────
-3,11 → Ctrl+Alt+C ......... CHIP FWD
-4,11 → Ctrl+Alt+H ......... CHIP STOP
-5,11 → Ctrl+Alt+X ......... CHIP REV
-3,2  → Ctrl+Alt+L ......... CLNT UP
-4,2  → Ctrl+Alt+D ......... CLNT DOWN
-5,2  → Ctrl+Alt+E ......... AUX CLNT (Mist toggle)
+4,7   → Ctrl+A  ............. Origin
+5,7   → Ctrl+B  ............. Send
+0,6   → Ctrl+D  ............. Delete
+1,6   → Ctrl+E  ............. Optional Stop
+3,6   → Ctrl+H  ............. Jog Increment .01
+4,6   → Ctrl+I  ............. Single
+5,6   → Ctrl+J  ............. Recv
+1,5   → Ctrl+M  ............. Block Delete
+0,8   → Ctrl+P  ............. Insert (common Paste)
+3,5   → Ctrl+R  ............. Jog Increment .1
+4,5   → Ctrl+U  ............. Home G28
+5,5   → Ctrl+Y  ............. Erase Program
+0,5   → Ctrl+Z  ............. Undo
+(Other Ctrl+letters reserved / avoid C,V,X,S,T,Q,G,N,W,L,P,F,O)
 
 ───────────────────────────────────────────────────────────────
-FEED / SPINDLE OVERRIDES & CONTROLS
+CTRL+SHIFT COMMANDS
 ───────────────────────────────────────────────────────────────
-7,11 → Ctrl+Alt+F ......... FEED -10 %
-7,12 → Ctrl+Alt+G ......... FEED 100 %
-7,4  → Ctrl+Alt+W ......... FEED +10 %
-7,3  → Ctrl+Alt+Q ......... HAND FEED
-
-8,11 → Ctrl+Alt+S ......... SPINDLE -10 %
-8,4  → Ctrl+Alt+K ......... SPINDLE +10 %
-8,3  → Ctrl+Alt+M ......... HAND SPINDLE
-8,12 → Ctrl+Alt+1 ......... SPINDLE 100 %
-
-9,11 → Ctrl+Alt+2 ......... SPINDLE FORWARD (CW)
-9,12 → Ctrl+Alt+3 ......... SPINDLE STOP
-9,4  → Ctrl+Alt+4 ......... SPINDLE REVERSE (CCW)
-
-───────────────────────────────────────────────────────────────
-RAPID OVERRIDES
-───────────────────────────────────────────────────────────────
-10,11 → Ctrl+Alt+5 ........ RAPID 5 %
-10,12 → Ctrl+Alt+6 ........ RAPID 25 %
-10,4  → Ctrl+Alt+7 ........ RAPID 50 %
-10,3  → Ctrl+Alt+8 ........ RAPID 100 %
-
-───────────────────────────────────────────────────────────────
-DISPLAY / MODE BUTTONS
-───────────────────────────────────────────────────────────────
-0,2  → Ctrl+Alt+9 ......... PROGRAM / CONVERSATIONAL
-0,1  → Ctrl+Alt+0 ......... POSITION
-0,0  → Ctrl+Alt+I ......... OFFSET
-0,10 → Ctrl+Alt+O ......... CURRENT COMMANDS
-1,2  → Ctrl+Alt+A ......... ALARM MESSAGES
-1,1  → Ctrl+Alt+B ......... PARAMETERS / DIAGNOSTICS
-1,0  → Ctrl+Alt+C ......... SETTINGS / GRAPH
-1,10 → Ctrl+Alt+D ......... HELP / CALCULATOR
-3,1  → Ctrl+Alt+E ......... HOME
+0,12  → Ctrl+Shift+C ........ Reset
+7,11  → Ctrl+Shift+D ........ Feed –10 %
+7,12  → Ctrl+Shift+E ........ Feed 100 %
+7,4   → Ctrl+Shift+F ........ Feed +10 %
+7,3   → Ctrl+Shift+H ........ Hand Feed
+8,11  → Ctrl+Shift+I ........ Spindle –10 %
+8,4   → Ctrl+Shift+J ........ Spindle +10 %
+0,9   → Ctrl+Shift+L ........ Edit
+3,9   → Ctrl+Shift+M ........ Hand Jog
+4,9   → Ctrl+Shift+O ........ Zero Return
+2,12  → Ctrl+Shift+P ........ Next Tool
+5,9   → Ctrl+Shift+R ........ List Program
+2,4   → Ctrl+Shift+S ........ Tool Release
+2,3   → Ctrl+Shift+T ........ Part Zero Set
+2,5   → Ctrl+Shift+U ........ ATC Rev
+2,6   → Ctrl+Shift+V ........ ATC Fwd
+3,11  → Ctrl+Shift+W ........ Chip Fwd
+4,11  → Ctrl+Shift+X ........ Chip Stop
+5,11  → Ctrl+Shift+Y ........ Chip Rev
+10,11 → Ctrl+Shift+Z ........ Rapid 5 %
 
 ───────────────────────────────────────────────────────────────
-MODE CLUSTER
+ALT+SHIFT COMMANDS (Misc Machine Ops)
 ───────────────────────────────────────────────────────────────
-0,9  → Ctrl+Alt+F ......... EDIT
-1,9  → Ctrl+Alt+G ......... MEM
-2,9  → Ctrl+Alt+H ......... MDI / DNC
-3,9  → Ctrl+Alt+J ......... HAND JOG
-4,9  → Ctrl+Alt+K ......... ZERO RETURN
-5,9  → Ctrl+Alt+L ......... LIST PROGRAM
+3,8   → Alt+Shift+B ......... Jog Step .0001
+5,8   → Alt+Shift+C ......... Select Program
+0,4   → Alt+Shift+E ......... Power Up / Restart
+5,2   → Alt+Shift+F ......... Aux Coolant (Mist)
+10,4  → Alt+Shift+G ......... Rapid 50 %
+1,8   → Alt+Shift+H ......... Single Block
+9,4   → Alt+Shift+I ......... Spindle CCW
+1,7   → Alt+Shift+J ......... Dry Run
+4,2   → Alt+Shift+K ......... Coolant Down
+3,7   → Alt+Shift+L ......... Jog Step .001
+3,2   → Alt+Shift+M ......... Coolant Up
+1,10  → Alt+Shift+N ......... Help / Calculator
+2,7   → Alt+Shift+O ......... Orient Spindle
+2,8   → Alt+Shift+Q ......... Flood Coolant
+9,11 → Alt+Shift+R .......... Spindle CW
+9,12 → Alt+Shift+S .......... Spindle Stop
+8,3  → Alt+Shift+T .......... Hand Spindle
+10,12 → Alt+Shift+U ......... Rapid 25 %
+8,12 → Alt+Shift+V .......... Spindle 100 %
+10,3 → Alt+Shift+Z .......... Rapid 100 %
 
 ───────────────────────────────────────────────────────────────
-EDIT / OPTION STRIP
+ALT+SHIFT NUMERIC (Extra Axis Selection Directions)
 ───────────────────────────────────────────────────────────────
-0,8  → Ctrl+Alt+M ......... INSERT
-1,8  → Ctrl+Alt+N ......... SINGLE BLOCK
-2,8  → Ctrl+Alt+P ......... COOLANT (Flood toggle)
-3,8  → Ctrl+Alt+R ......... JOG INCREMENT .0001
-4,8  → Ctrl+Alt+S ......... ZERO ALL
-5,8  → Ctrl+Alt+T ......... SELECT PROGRAM
+4,3   → Alt+Shift+1 ......... – X
+4,12  → Alt+Shift+2 ......... + X
+3,3   → Alt+Shift+3 ......... – Y
+5,12  → Alt+Shift+4 ......... + Y
+5,4   → Alt+Shift+5 ......... – Z
+3,4   → Alt+Shift+6 ......... + Z
+(Handled in firmware for rotary axes below)
 
-0,7  → Ctrl+Alt+U ......... ALTER
-1,7  → Ctrl+Alt+V ......... DRY RUN
-2,7  → Ctrl+Alt+W ......... ORIENT SPINDLE
-3,7  → Ctrl+Alt+X ......... JOG INCREMENT .001
-4,7  → Ctrl+Alt+Y ......... ORIGIN
-5,7  → Ctrl+Alt+Z ......... SEND
-
-0,6  → Ctrl+Alt+1 ......... DELETE
-1,6  → Ctrl+Alt+2 ......... OPTION STOP (M01 Break)
-3,6  → Ctrl+Alt+3 ......... JOG INCREMENT .01
-4,6  → Ctrl+Alt+4 ......... SINGLE (Single Block)
-5,6  → Ctrl+Alt+5 ......... RECV
-
-0,5  → Ctrl+Alt+6 ......... UNDO
-1,5  → Ctrl+Alt+7 ......... BLOCK DELETE
-3,5  → Ctrl+Alt+8 ......... JOG INCREMENT .1
-4,5  → Ctrl+Alt+9 ......... HOME G28
-5,5  → Ctrl+Alt+0 ......... ERASE PROGRAM
 ───────────────────────────────────────────────────────────────
+ROTARY AXIS (A/B) – Handled in Firmware
+───────────────────────────────────────────────────────────────
+5,3   → ROTARY- (–A / –B) → handled in sendKey()
+    Shift OFF → Alt+Shift+7  = –A
+    Shift ON  → Alt+Shift+9  = –B
+
+3,12 → ROTARY+ (+A / +B) → handled in sendKey()
+    Shift OFF → Alt+Shift+8  = +A
+    Shift ON  → Alt+Shift+0  = +B
+
+───────────────────────────────────────────────────────────────
+SOFTKEYS / USER FUNCTION KEYS
+───────────────────────────────────────────────────────────────
+1,11 → F1    ............... User Softkey 1
+1,12 → F2    ............... User Softkey 2
+1,4   → F3    ............... User Softkey 3
+1,3   → F4    ............... User Softkey 4
+
+───────────────────────────────────────────────────────────────
+END OF TABLE
+───────────────────────────────────────────────────────────────
+
